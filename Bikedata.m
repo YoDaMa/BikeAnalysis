@@ -1,20 +1,32 @@
 function Bikedata(filename) 
 
 close all;
- 
+
 Fs = 100; % Visually inspecting the oscilloscope
 %filename = 'Bike_1.csv'
 SENS_DATA = importdata(filename);
 parsedata = SENS_DATA.data;
 dlen = length(parsedata(:,1));
-fdel = .10;
-edel = .1;
+fdel = 20;
+edel = 20;
 SENS_DATA = parsedata(fdel*Fs:dlen-edel*Fs,:);
 % SENS_DATA = parsedata(1:timedel*Fs,:);
 timestamp = SENS_DATA(:,1);
+% ATT_R = SENS_DATA(:,2);
+% ATT_P = SENS_DATA(:,3);
+% ATT_Y = SENS_DATA(:,4);
+% ROTR_X = SENS_DATA(:,5);
+% ROTR_Y = SENS_DATA(:,6);
+% ROTR_Z = SENS_DATA(:,7);
+% GR_X = SENS_DATA(:,8);
+% GR_Y = SENS_DATA(:,9);
+% GR_Z = SENS_DATA(:,10);
 UA_X = SENS_DATA(:,11);
 UA_Y = SENS_DATA(:,12);
 UA_Z = SENS_DATA(:,13);
+% MAG_X = SENS_DATA(:,12);
+% MAG_Y = SENS_DATA(:,13);
+% MAG_Z = SENS_DATA(:,14);
 
 
 keep_rows = find(~isnan(UA_X)); % find the 1s produced by isnan.
@@ -185,7 +197,8 @@ subplot 223;
 
 subplot 224;
     [~,f,t,pxx]=spectrogram(lpf,wind,nlap,nfft,Fs,'yaxis');
-    [~,I] = max(10*log10(pxx)); % largest PSD in each column (STFT).
+    [M,I] = max(10*log10(pxx)); % largest PSD in each column (STFT).
+    M
     cadot = 60*f(I);
     cadlen = length(cadot);
     x = linspace(0,t(length(t)),cadlen);
