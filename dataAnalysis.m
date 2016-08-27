@@ -1,7 +1,11 @@
-function dataAnalysis()
+function dataAnalysis(filename)
 
 obs = [68.5,81,64,43,53,41.5,47.5,52.5,57.5,62.5,97.5,103,96,82.5,97.5,87.5]';
 calc = [73.97,83.86,67.02,42.48,52.92,40.28,47.97,52,58.04,62.8,95.95,206.91,95.95,82.03,100.34,86.06]';
+data = importdata(filename)
+
+
+
 format long;
 [obs,idx] = sort(obs);
 calc = calc(idx);
