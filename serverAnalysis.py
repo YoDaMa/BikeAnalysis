@@ -3,8 +3,17 @@ import numpy as np
 from scipy import signal
 import matplotlib.pyplot as plt
 
-filename = "SAMPLE.json"
-file = pd.read_json("{}".format(filename))
+
+
+# times = pd.date_range('2016-07-19', periods=200, freq='.025sec')
+
+
+# sample = {}
+
+
+# filename = "SAMPLE.json"
+# file = pd.read_json("{}".format(filename))
+# file = pd.Series(d, name = '')
 
 """
 Citation: "Analysis of Time and Frequency Domain Features
@@ -19,26 +28,9 @@ Spectral flux.
 
 """
 
-tsig = []
-Fs = 40
-
-# The signal needs to be converted to a numpy array so that it may be manipulated.
-tsig = np.asarray(tsig)
 
 
-tmean = 0
-zcrate = 0
-mcrate = 0
-minima = 0
-maxima = 0
-autocorr = 0
-std = 0
 
-fmean = 0
-fcorr = 0
-fspecroll = 0
-fspeccent = 0
-fspecflux = 0
 
 def zeroCrossRate(vec):
     """
@@ -81,7 +73,7 @@ def frequencyDomain(vec):
     np2 = nextpow2(L)
     fftlength = np2 
     ctr = int((fftlength/2))
-    faxis = np.multiple(Fs/2,np.linspace(0,1,ctr))
+    faxis = np.multiply(Fs/2,np.linspace(0,1,ctr))
     b, a = signal.butter(4, [.01, .5], 'bandpass', analog=False)
     bp_vec = signal.lfilter(b, a, vec)
     fdata = np.fft.fft(bp_vec,fftlength)
@@ -118,20 +110,56 @@ def findPeaks(vec, Fs=None):
 
     return max_idx
 
+def readData(dict1):
+    dictnew = {}
+    ts = np.array()
+    for stamp in dict1.keys():
+        # Hopefully the pandas to_datetime will convert the strings accordingly.
+        # This allows for iteration based on numerical values in the
+        calval = pd.to_datetime(stamp)
+        dictnew[calval] = dict1[stamp]
+        np.append(ts,calval)
+    np.sort(ts) # Hopefully this sorts the calendar dates from least to greatest.
 
-tmean = tsig.mean()
-zcrate = zeroCrossRate(tsig) #create zeroCrossRate function
-mcrate = zeroCrossRate(tsig-tmean)
-minima = tsig.min()
-maxima = tsig.max()
-variance = tsig.var()
-autocorr = autocorrelation(tsig,tmean)
-std = np.std(tsig)
+    return ts, dictnew
 
-fsig = frequencyDomain(tsig)
-fmean = fsig.mean()
-fcorr = autocorrelation(fsig,fmean)
-fpeaks = signal.find_peaks_cwt(fsig)
-frelmax = signal.argrelmax(fsig)
-rpm = findPeaks(fsig, Fs)
 
+def compute(accdata):
+    ts, itdata = readData(accdata)
+    ux_x = np.array()
+    ux_y = np.array()
+    ux_z = np.array()
+    ux = [ux_x, ux_y, ux_z]
+
+    for time in ts:
+        np.append(ux_x,itdata[time][0])
+        np.append(ux_y,itdata[time][1])
+        np.append(ux_z,itdata[time][2])
+
+    pow = [np.linalg.norm(ux_x), np.linalg.norm(ux_y), np.linalg.norm(ux_z)]
+    tsig = ux[pow.index(max(pow))]  # set data as the axis with the largest power.
+
+    Fs = 40
+    tmean = tsig.mean()
+    zcrate = zeroCrossRate(tsig) #
+    mcrate = zeroCrossRate(tsig-tmean)
+    minima = tsig.min()
+    maxima = tsig.max()
+    variance = tsig.var()
+    autocorr = autocorrelation(tsig,tmean)
+    std = np.std(tsig)
+
+    fsig = frequencyDomain(tsig)
+    fmean = fsig.mean()
+    fcorr = autocorrelation(fsig,fmean)
+    fpeaks = signal.find_peaks_cwt(fsig)
+    frelmax = signal.argrelmax(fsig)
+    rpm = findPeaks(fsig, Fs)
+
+    # Need to make sure these creation of arrays are valid since it's a mix of
+    # numbers and arrays...
+    # timevec = np.array([tmean,zcrate,mcrate,minima,maxima,variance,autocorr,std])
+    # fvec = np.array([fsig,fmean,fcorr,fpeaks,frelmax,rpm])
+
+
+    return rpm
