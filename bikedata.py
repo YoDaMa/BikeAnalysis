@@ -3,6 +3,7 @@ import numpy as np
 from scipy import signal
 from matplotlib import *
 import matplotlib.pyplot as plt
+import serverAnalysis
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.collections import PolyCollection
 
@@ -247,8 +248,8 @@ def main():
         print("Did not enter a filename.")
     else:
         rpm, stfts = bikedata(filename)
-        print("Average RPM over Data:",str(rpm))
-        print("Peaks:",str(stfts))
+        print("Average RPM over Data:", str(rpm))
+        print("Peaks:", str(stfts))
 
 
 

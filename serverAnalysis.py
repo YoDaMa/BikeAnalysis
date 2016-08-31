@@ -111,17 +111,9 @@ def findPeaks(vec, Fs=None):
     return max_idx
 
 def readData(dict1):
-    dictnew = {}
-    ts = np.array()
-    for stamp in dict1.keys():
-        # Hopefully the pandas to_datetime will convert the strings accordingly.
-        # This allows for iteration based on numerical values in the
-        calval = pd.to_datetime(stamp)
-        dictnew[calval] = dict1[stamp]
-        np.append(ts,calval)
+    ts = dict1.keys()
     np.sort(ts) # Hopefully this sorts the calendar dates from least to greatest.
-
-    return ts, dictnew
+    return ts
 
 
 def compute(accdata):
@@ -162,4 +154,4 @@ def compute(accdata):
     # fvec = np.array([fsig,fmean,fcorr,fpeaks,frelmax,rpm])
 
 
-    return rpm
+    return float(rpm)
