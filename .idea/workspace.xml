@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ff3f4978-68ac-49e8-98e2-ef99d8fea5cc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bikedata.py" afterPath="$PROJECT_DIR$/bikedata.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/serverAnalysis.py" afterPath="$PROJECT_DIR$/serverAnalysis.py" />
     </list>
     <ignored path="BikeAnalysis.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -69,8 +67,8 @@
       <file leaf-file-name="serverAnalysis.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/serverAnalysis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1930">
-              <caret line="156" column="21" selection-start-line="156" selection-start-column="21" selection-end-line="156" selection-end-column="21" />
+            <state relative-caret-position="786">
+              <caret line="118" column="20" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
                 <element signature="e#713#1181#0" expanded="false" />
@@ -499,7 +497,14 @@
       <option name="project" value="LOCAL" />
       <updated>1472393384902</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Functionalized everything. Returns rpm if you call serverAnalysis">
+      <created>1472661755280</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1472661755280</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -975,8 +980,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/serverAnalysis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1930">
-          <caret line="156" column="21" selection-start-line="156" selection-start-column="21" selection-end-line="156" selection-end-column="21" />
+        <state relative-caret-position="786">
+          <caret line="118" column="20" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
             <element signature="e#713#1181#0" expanded="false" />
