@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import serverAnalysis
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.collections import PolyCollection
+import os
 
 
 """
@@ -32,9 +33,12 @@ def bikedata(fname):
 
     sMat = retrieveacc("{}".format(fname))
     # User Acceleration
-    ux_x = sMat['user_acc_x']
-    ux_y = sMat['user_acc_y']
-    ux_z = sMat['user_acc_z']
+    # ux_x = sMat['user_acc_x']
+    # ux_y = sMat['user_acc_y']
+    # ux_z = sMat['user_acc_z']
+    ux_x = sMat['user_acc_x(G)']
+    ux_y = sMat['user_acc_y(G)']
+    ux_z = sMat['user_acc_z(G)']
     ux = [ux_x,ux_y,ux_z]
 
     X_Mean = float(np.mean(ux_x))
@@ -57,8 +61,9 @@ def bikedata(fname):
     ctr = int((fftlength/2))
     print(ctr)
     faxis = np.multiply(Fs/2,np.linspace(0,1,ctr))
-    b, a = signal.butter(4, [.01, .5], 'bandpass', analog=False)
+    b, a = signal.butter(4, [.5, .5], 'bandpass', analog=False)
     filt_d = signal.lfilter(b, a, data)
+    fild_d = data
     fdata = np.fft.fft(filt_d,fftlength) #/ len(data) # Possibly need to normalize by the length of data.
     mag = abs(fdata[0:ctr])
     print(fdata[0:ctr])
@@ -201,8 +206,8 @@ def nextpow2(n):
 
 def retrieveacc(fname):
     sMat = {} # Storage Matrix is a dictionary I suppose
-
-    with open(fname,mode='r',newline=None) as csvfile:
+    fpath = os.path.join(os.path.dirname(__file__),fname)
+    with open(fpath,mode='r',newline=None) as csvfile:
 
         parsed = csv.reader(csvfile)
         parsed = np.array(list(parsed))

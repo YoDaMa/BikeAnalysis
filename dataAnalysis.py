@@ -1,13 +1,15 @@
 import csv
 import numpy as np
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 from matplotlib import rc
+import os.path as path
 
 
 
 
 def main():
-    with open("Bikedata.csv", newline=None) as csvfile:
+    fpath = path.join('Data', 'Bikedata.csv')
+    with open(fpath, newline=None) as csvfile:
         breader = csv.reader(csvfile,delimiter=',')
         with plt.xkcd():
             x = []

@@ -33,31 +33,6 @@
     <option name="SHOW_TABLE_DETAILS" value="true" />
     <option name="SHOW_EMPTY_GROUPS" value="false" />
   </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
-            <file leaf-file-name="bikedata.py" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/bikedata.py">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="748">
-                    <caret line="250" column="46" selection-start-line="250" selection-start-column="46" selection-end-line="250" selection-end-column="46" />
-                    <folding>
-                      <element signature="e#0#10#0" expanded="true" />
-                      <element signature="e#5338#5613#0" expanded="false" />
-                      <element signature="e#6143#6369#0" expanded="false" />
-                      <element signature="e#6396#6561#0" expanded="false" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="BikeAnalysis" />
@@ -67,8 +42,8 @@
       <file leaf-file-name="serverAnalysis.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/serverAnalysis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="786">
-              <caret line="118" column="20" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
+            <state relative-caret-position="176">
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
                 <element signature="e#713#1181#0" expanded="false" />
@@ -122,10 +97,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-16" />
-    <option name="y" value="-16" />
+    <option name="x" value="-14" />
     <option name="width" value="3204" />
-    <option name="height" value="1732" />
+    <option name="height" value="1714" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -504,12 +478,19 @@
       <option name="project" value="LOCAL" />
       <updated>1472661755280</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Functionalized everything. Returns rpm if you call serverAnalysis">
+      <created>1472661855986</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1472661855986</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-16" y="-16" width="3204" height="1732" extended-state="0" />
-    <editor active="true" />
+    <frame x="-14" y="0" width="3204" height="1714" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1225" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -571,6 +552,29 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/serverAnalysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#713#1181#0" expanded="false" />
+            <element signature="e#1219#1646#0" expanded="false" />
+            <element signature="e#1678#2067#0" expanded="false" />
+            <element signature="e#2094#2369#0" expanded="false" />
+            <element signature="e#2404#2593#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataAnalysis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/serverAnalysis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -967,8 +971,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bikedata.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="250" column="46" selection-start-line="250" selection-start-column="46" selection-end-line="250" selection-end-column="46" />
+        <state relative-caret-position="688">
+          <caret line="249" column="35" selection-start-line="249" selection-start-column="35" selection-end-line="249" selection-end-column="35" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#5338#5613#0" expanded="false" />
@@ -980,8 +984,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/serverAnalysis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="786">
-          <caret line="118" column="20" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
+        <state relative-caret-position="176">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
             <element signature="e#713#1181#0" expanded="false" />
