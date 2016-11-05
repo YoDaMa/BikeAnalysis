@@ -12,7 +12,7 @@ calc = calc(idx);
 
 
 n = length(obs);
-MSE = sum(sqrt(abs(calc-obs).^2))/n
+MSE = sum(sqrt(abs(calc-obs).   ^2))/n
 err = abs(calc-obs)./obs.*100;
 b1 = obs\calc
 linreg = b1*obs;

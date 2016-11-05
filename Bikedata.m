@@ -44,8 +44,12 @@ Accel_Y = Accel_Y(sorted);
 % Accel_Y(:) = 0;
 Accel_Z = Accel_Z(sorted);
 % Accel_Z(:) = 0;
-accel = [Accel_X Accel_Y Accel_Z];
-
+% accel = [Accel_X Accel_Y Accel_Z];
+ws = 40
+we = 50
+Accel_X = Accel_X(ws*Fs:we*Fs);
+Accel_Y = Accel_Y(ws*Fs:we*Fs);
+Accel_Z = Accel_Z(ws*Fs:we*Fs);
 
 % Time length of signal
 
@@ -61,9 +65,9 @@ powers = [powX powY powZ];
 ptot = sum(powers);
 [~,powidx] = max(powers);
 
-npowX = bandpower(Accel_X(1:11*Fs));
-npowY = bandpower(Accel_Y(1:11*Fs));
-npowZ = bandpower(Accel_Z(1:11*Fs));
+% npowX = bandpower(Accel_X(1:11*Fs));
+% npowY = bandpower(Accel_Y(1:11*Fs));
+% npowZ = bandpower(Accel_Z(1:11*Fs));
 
 % % Remove the signal with the least power.
 % % This may be redundant considering weighting.
@@ -95,7 +99,6 @@ end
 
 
 
-
 X_weight = 3*powX/ptot;
 Y_weight = 3*powY/ptot;
 Z_weight = 3*powZ/ptot;
@@ -107,22 +110,24 @@ t = linspace(0,length(Accel_X)/Fs,length(Accel_X));
 
 figure;
 subplot(211);
-plot(t,Accel_X,'b');
+% plot(t,Accel_X,'b');
 hold on;
-plot(t,Accel_Y,'m');
-plot(t,Accel_Z,'r');
+% plot(t,Accel_Y,'m');
+% plot(t,Accel_Z,'r');
 
-xlabel('Time (sec)');
-ylabel('User Acceleration (m/s^2)');
-title('Cadence of Bike User');
+xlabel('Time (sec)', 'FontSize' ,10);
+ylabel('User Acceleration (m/s^2)', 'FontSize', 10);
+title('Cadence of Bike User','FontSize',10);
 
 
 %data = sqrt((Z_weight.*Accel_Z).^2+(Y_weight.*Accel_Y).^2+(X_weight.*Accel_X).^2);
-%data = Accel_X;
+data = Accel_X;
 data = data-mean(data);% subtract DC value
-plot(t,data,'g','linewidth',1); 
+plot(t,data,'b','linewidth',2); 
+% findpeaks(data, Fs,'MinPeakDistance',1/100,'MinPeakHeight',0);
 hold off;
-legend('X','Y','Z','Selected');
+% legend('X','Y','Z','Selected');
+
 
 
 % Unfiltered Data
@@ -132,81 +137,96 @@ fdata = fft(data, fftlength) / L;
 ctr = (fftlength / 2) + 1;
 faxis = 60*(Fs / 2) .* linspace(0,1, ctr); % multiply by 60 for RPM vs RPS
 mag = abs(fdata(1:ctr));
-[~,idx] = max(mag);
+disp('Maximum Index:');
+[~,idx] = max(mag)
 %fftcdnc = faxis(idx)
 
 % Plot Unfiltered Data
 subplot(212);
-plot(faxis,mag); hold on;
-title('FFT of Weighted Averaged Data');
-xlabel('Frequency (RPM)');
-ylabel('Magnitude');
+plot(faxis,mag,'LineWidth',2); hold on;
+% findpeaks(mag,faxis,'MinPeakHeight',.005)
+[pkt,lct] = findpeaks(mag,faxis,'MinPeakHeight',.005);
+lct(1:5)
+% plot(lct,pkt,'x');
+[spkt,slct] = sort(pkt,'descend');
+xsorted = lct(slct);
+maxVal = spkt(1:5)
+maxIdx = xsorted(1:5)
+% plot(maxIdx,maxVal,'x');
+B = mag(slct);
+
+
+title('FFT of Weighted Averaged Data','FontSize' ,10);
+xlabel('Frequency (RPM)','FontSize' ,10);
+ylabel('Magnitude','FontSize' ,10);
 
 
 % Filtered Data
 cutfreq = [.25 15];
 [b,a] = butter(4,cutfreq./(Fs./2));
-lpf = filter(b,a,data);
+lpf = filter(b,a,data)  ;
 bdata = fft(lpf,fftlength) / L;
 [~,idx] = max(abs(bdata(1:ctr)));
 % bdata(idx) = 0;
-fftcadence = faxis(idx);
+fftcadence = faxis(idx)
+powah = bandpower(lpf,Fs,[fftcadence/60-.05 fftcadence/60+.05])
+totpowah = bandpower(lpf)
 
 plot(faxis,abs(bdata(1:ctr)),'linewidth',1);
 legend('unfilt','butter LPF'); hold off;
 
 
-
-figure;
-subplot 221;
+    
+% figure;
+% subplot 221;
     % windlen = floor(length(lpf)/10);
     windt = 4;
     windlen = floor(windt*Fs);
     nlap= [];
     nfft=2^nextpow2(windlen);
     wind = hamming(windlen);
-    spectrogram(lpf,wind,nlap,nfft,Fs,'yaxis');hold on;
-    title('Spectrogram (4s)');
-    % colorbar;
-    %plot(t,f(I),q,'r','linewidth',2); 
-    hold off;
-    
-
-
-subplot 222;
+%     spectrogram(lpf,wind,nlap,nfft,Fs,'yaxis');hold on;
+%     title('Spectrogram (4s)');
+%     % colorbar;
+%     %plot(t,f(I),q,'r','linewidth',2); 
+%     hold off;
+%     
+% 
+% 
+% subplot 222;
     [s,f,t,pxx]=spectrogram(lpf,wind,nlap,nfft,Fs,'yaxis');
 %     disp(['Spectrogram time: ', num2str(t(length(t))),' seconds.']);
     [~,I] = max(10*log10(pxx)); % largest PSD in each column (STFT).
     cadot = 60*f(I); %cadence over time
-    cadlen = length(cadot);
-    x = linspace(0,t(length(t)),cadlen);
-    stairs(x,cadot,'linewidth',2);
-    grid on;
-    title('Discrete Cadence Over Time');
-    xlabel('Time (mins)');
-    ylabel('Cadence (RPM)');
-
-subplot 223;
-    windt = 12.8;
-    windlen = floor(windt*Fs);
-    nlap= [];
-    nfft=2^nextpow2(windlen);
-    wind = hamming(windlen);
-    spectrogram(lpf,wind,nlap,nfft,Fs,'yaxis');hold on;
-    title('Spectrogram (12.8s)');
-
-subplot 224;
+%     cadlen = length(cadot);
+%     x = linspace(0,t(length(t)),cadlen);
+%     stairs(x,cadot,'linewidth',2);
+%     grid on;
+%     title('Discrete Cadence Over Time');
+%     xlabel('Time (mins)');
+%     ylabel('Cadence (RPM)');
+% 
+% subplot 223;
+%     windt = 12.8;
+%     windlen = floor(windt*Fs);
+%     nlap= [];
+%     nfft=2^nextpow2(windlen);
+%     wind = hamming(windlen);
+%     spectrogram(lpf,wind,nlap,nfft,Fs,'yaxis');hold on;
+%     title('Spectrogram (12.8s)');
+% 
+% subplot 224;
     [~,f,t,pxx]=spectrogram(lpf,wind,nlap,nfft,Fs,'yaxis');
     [M,I] = max(10*log10(pxx)); % largest PSD in each column (STFT).
     M
     cadot = 60*f(I);
     cadlen = length(cadot);
     x = linspace(0,t(length(t)),cadlen);
-    stairs(x,cadot,'linewidth',2);
-    grid on;
-    title('Discrete Cadence Over Time');
-    xlabel('Time (mins)');
-    ylabel('Cadence (RPM)');
+%     stairs(x,cadot,'linewidth',2);
+%     grid on;
+%     title('Discrete Cadence Over Time');
+%     xlabel('Time (mins)');
+%     ylabel('Cadence (RPM)');
 
 
 

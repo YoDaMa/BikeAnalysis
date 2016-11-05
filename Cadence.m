@@ -42,7 +42,8 @@ Z_weight = Z_mean/Tot_mean
 X_weight = X_mean/Tot_mean
 Y_weight = Y_mean/Tot_mean
 
-data = sqrt((Accel_Z*Z_weight).^2+(Accel_Y*Y_weight).^2+(Accel_X*X_weight).^2);
+% data = sqrt((Accel_Z*Z_weight).^2+(Accel_Y*Y_weight).^2+(Accel_X*X_weight).^2);
+data = Accel_X;
 data = data-mean(data);% subtract DC value
 
 
